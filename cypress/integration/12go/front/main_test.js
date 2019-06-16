@@ -12,16 +12,19 @@ describe('main test', function(){
         cy.wait(10000);
         cy.get('#seats').select("1");
         cy.wait(2000);
-        cy.get('.mobile').click().type("+33672618698", { delay: 100 });
-        cy.get('.email').click().type("anton.golubnychyi@12go.asia", { delay: 100 });
+        cy.get('input[name="contact[mobile]"]').click().type("+33672618698", { delay: 100 });
+        cy.get('input[name="contact[email]"]').click().type("anton.golubnychyi@12go.asia", { delay: 100 });
         cy.get('input[name="passenger[0][full_name]"]').click().type('Tester Robot', { delay: 100});
+        //set checkboxes
         cy.get('input[name="misc[terms]"]').check();
         cy.get('input[name="misc[cancelation_policy]"]').check();
         cy.get('input[name="misc[confirm_trip]"]').check();
+        //start payment omise
         cy.get('#cardNumber').click().type("4242424242424242", { delay: 200 }).should('have.value', '4242 4242 4242 4242');
         cy.get('#cardName').click().type("SERG SAF", { delay: 200}).should('have.value', 'SERG SAF');
         cy.get('#cardValid').click().type("1225", { delay: 200}).should('have.value', '12/25');
         cy.get('#cardPass').click().type("255", { delay: 200}).should('have.value', '255');
         cy.get('button[data-action=omise]').click();
+        // check error - card not valid, because of test number
     })
 })
